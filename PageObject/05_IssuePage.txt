@@ -1,0 +1,61 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+Documentation	Issue Test scenario: Create, Update, Delete
+
+# TODO: Write Precondition and Postcondition, Tags
+
+Pre Condition   Open Browser
+Post Condition  Close All Browsers
+Tags    Create, Update, Delete, TS-5-Create, TS-7-Update, TS-8-Delete
+
+#******************* Common Variables ********************
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+# TODO: Write Issue creation field variables, Updated name of the issue
+
+NewIssueURL= https://gitlab.com/misterHolmes/sherlock-project/-/issues/new
+EditIssueURL= https://gitlab.com/misterHolmes/sherlock-project/-/issues/1
+
+Title=  Deduction bug
+NewTitle= Deduction issue
+Description= This is bug of the deduction method
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# TODO: Write Positive Test Cases and Test Process steps
+
+# Positive Test examples are below write test process steps for each below test case
+
+Create issue with title and description
+    Navigate To New Issue Page  NewIssueURL
+    Input Title         Title
+    Input Description   Description
+    Submit Create Form
+    Verify Page Should Contain Issue Page With Issue Name and Activities
+
+Update name of issue
+    Navigate To Edit Issue Page  EditIssueURL
+    Input Title    NewTitle
+    Submit Edit Form
+    Verify Page Should Contain Issue Page With Updated Issue Name and Activities
+
+Create second issue with previous updated name
+    Navigate To New Issue Page  NewIssueURL
+    Input Title         NewTitle
+    Verify Message Should Contain Information About The Already Existing Issue With Same Title And Suggestion to Comment Existing Issue
+    Submit Create Form
+    Verify Page Should Contain Issue Page With Issue Name and Activities
+
+Delete first issue
+    Navigate To Edit Issue Page  EditIssueURL
+    Click Issue Actions and Click Delete
+    Submit Delete Form
+    Verify Page Should Contain Updated Issue List and Success Message
+

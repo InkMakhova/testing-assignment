@@ -1,0 +1,93 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+
+# TODO: Write Documentation e.g. User Registration Test scenario with verification, valid and invalid credentials.
+
+Documentation  User Registration Test scenario with verification, valid and invalid credentials
+
+# TODO: Write Precondition, Postcondition, Tags
+
+Pre Condition	Open Browser
+Post Condition	Close All Browsers
+Tags    Signup, TS-2-Registration
+
+#******************* Common Variables ********************
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+# TODO: Write Registration field variables
+
+SignupUrl= https://gitlab.com/users/sign_up
+FirstName= Sherlock
+LastName= Holmes
+UserName= misterHolmes
+Email= sherlock.holmes@baker-street.uk
+Password= sherlockTheBest
+VerificationCode= 75345
+Invalid_UserName= 0
+Invalid_Email= sherlock.holmesAtbaker-street.uk
+Invalid_Password= sherlockTheBest
+Invalid_VerificationCode= 123
+Empty=
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# Positive Test examples are below write test process steps for each below test case
+
+Register user with valid username, email and password
+    Navigate To Signup Page  SignupUrl
+    Input FirstName     FirstName
+    Input LastName      LastName
+    Input UserName      UserName
+    Input Email         Email
+    Input Password      Password
+    Submit Signup Form
+    Verify Page Should Contain Ask to Verify Email Address And Verification Code Input
+
+Verify email with valid verification code
+    Input VerificationCode  VerificationCode
+    Verify Page Should Contain Successful Verification Message
+
+# Negative Test examples keywords are below write test process steps for each below test case
+
+Error message Should Be Visible After Invalid Signup With Empty And Space
+    Navigate To Signup Page  SignupUrl
+    Input FirstName     Empty
+    Input LastName      Empty
+    Input Username      Empty
+    Input Email         Empty
+    Input Password      Empty
+    Submit Signup Form
+    Verify That Error message should show This field is required
+
+Error message Should Be Visible After Invalid Signup with Invalid UserName And Valid FirstName And Valid LastName And Valid Email And Valid Password
+    Navigate To Signup Page  SignupUrl
+    Input FirstName     FirstName
+    Input LastName      LastName
+    Input Username      Invalid_UserName
+    Input Email         Email
+    Input Password      Password
+    Submit Signup Form
+    Verify That Error message should show This field is invalid
+
+Error message Should Be Visible After Invalid Signup with Invalid Email And Valid FirstName And Valid LastName And Valid UserName And Valid Password
+    Navigate To Signup Page  SignupUrl
+    Input FirstName     FirstName
+    Input LastName      LastName
+    Input Username      UserName
+    Input Email         Invalid_Email
+    Input Password      Password
+    Submit Signup Form
+    Verify That Error message should show This field is invalid
+
+Error message Should Be Visible After Valid Signup And Invalid Verification Code
+    Input VerificationCode  Invalid_VerificationCode
+    Verify That Error message should show This field is invalid
+
+
